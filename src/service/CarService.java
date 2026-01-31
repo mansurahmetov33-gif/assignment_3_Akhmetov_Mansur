@@ -1,7 +1,9 @@
 package service;
 
-import model.Car;
 import repository.CarRepository;
+
+import model.Car;
+
 
 import java.util.List;
 
@@ -24,4 +26,27 @@ public class CarService {
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }
+
+    public void deleteCar(int id) { carRepository.delete(id);
+    }
+
+
+    public List<Car> sortByPrice() {
+
+        return carRepository.findAll().stream()
+                .sorted((c1, c2) -> Double.compare(c1.getPrice(), c2.getPrice()))
+                .toList();
+    }
+
+    public List<Car> getExpensiveCars(double minPrice) {
+
+        return carRepository.findAll().stream()
+                .filter(car -> car.getPrice() >= minPrice)
+                .toList();
+    }
+
+
+
 }
+
+
